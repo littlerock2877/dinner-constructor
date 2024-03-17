@@ -1,9 +1,10 @@
 package ru.practicum.dinner;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
-
     static DinnerConstructor dc;
     static Scanner scanner;
 
@@ -41,7 +42,15 @@ public class Main {
         System.out.println("Введите название блюда:");
         String dishName = scanner.nextLine();
 
-        // добавьте новое блюдо
+        if (!dc.menu.containsKey(dishType)) {
+            System.out.printf("Добавляем новый тип блюд : %s\n", dishType);
+            List<String> dishes = new ArrayList<>();
+            dishes.add(dishName);
+            dc.menu.put(dishType, dishes);
+        } else {
+            System.out.printf("Добавляем блюдо %s в существующий тип блюд %s", dishName, dishType);
+            dc.menu.get(dishType).add(dishName);
+        }
     }
 
     private static void generateDishCombo() {
@@ -52,14 +61,21 @@ public class Main {
         scanner.nextLine();
 
         System.out.println("Вводите типы блюда, разделяя символом переноса строки (enter). Для завершения ввода введите пустую строку");
-        String nextItem = scanner.nextLine();
-
-        //реализуйте ввод типов блюд
-        while (!nextItem.isEmpty()) {
-
+        List<String> dishTypes = new ArrayList<>();
+        while (true) {
+            String nextItem = scanner.nextLine();
+            if (nextItem.isEmpty()) {
+                break;
+            }
+            dishTypes.add(nextItem);
         }
+        printCombos(dc.generateCombos(dishTypes, numberOfCombos));
+    }
 
-        // сгенерируйте комбинации блюд и выведите на экран
-
+    private static void printCombos(List<List<String>> combos) {
+        for (int i = 0; i < combos.size(); i++) {
+            System.out.println("Комбо " + (i + 1));
+            System.out.println(combos.get(i));
+        }
     }
 }
