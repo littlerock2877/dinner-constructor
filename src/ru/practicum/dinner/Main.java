@@ -42,17 +42,7 @@ public class Main {
         System.out.println("Введите название блюда:");
         String dishName = scanner.nextLine();
 
-        if (!dc.menu.containsKey(dishType)) {
-            System.out.printf("Добавляем новый тип блюд \"%s\" и новое блюдо в нее \"%s\"\n", dishType, dishName);
-            List<String> dishes = new ArrayList<>();
-            dishes.add(dishName);
-            dc.menu.put(dishType, dishes);
-        } else if (!dc.menu.get(dishType).contains(dishName)){
-            System.out.printf("Добавляем блюдо \"%s\" в существующий тип блюд \"%s\"\n", dishName, dishType);
-            dc.menu.get(dishType).add(dishName);
-        } else {
-            System.out.printf("Блюдо \"%s\" уже находится в категории \"%s\"\n", dishName, dishType);
-        }
+        dc.addNewDish(dishType, dishName);
     }
 
     private static void generateDishCombo() {
